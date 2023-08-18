@@ -3,6 +3,8 @@
 # TODO function variable into local variable
 # TODO external MAYUSC internal minusc
 
+HEADLESS=1
+
 function cleanup() {
 	pkill -x px4  || true
 	pkill gzclient
@@ -110,7 +112,7 @@ function run_gzclient() {
 	sleep 3
 
 	echo "Starting gazebo client"
-	nice -n 20 gzclient $verbose $follow_mode_  # &  # TODO fails on headless
+	export DISPLAY=:0 && gzclient $verbose $follow_mode_  # &  # TODO fails on headless
 	GUI_PID=$!
 }
 
@@ -239,7 +241,7 @@ function run_sitl() {
 	mkdir -p "$working_dir"
 	pushd "$working_dir" >/dev/null
 
-	sitl_command="\"$sitl_bin\" -i $N $no_pxh \"$build_path\"/etc -s etc/init.d-posix/rcS -w $working_dir &"
+	sitl_command="\"$sitl_bin\" -i $N $no_pxh \"$build_path\"/etc -s etc/init.d-posix/rcS -w $working_dir"
 	test_test___="\"$sitl_bin\" -i $N $no_pxh \"$build_path\"/etc -s etc/init.d-posix/rcS -w sitl_${MODEL}_${N} >out.log 2>err.log &"
 	# TODO verbose
 
@@ -348,7 +350,7 @@ sleep 2
 set +e
 spawn_drones $drones
 spawn_objects $objects
-
+#sleep 100
 if [[ -n "$HEADLESS" ]]; then
 	echo "not running gazebo gui"
 else
