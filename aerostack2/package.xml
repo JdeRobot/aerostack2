@@ -13,7 +13,7 @@
 
   <exec_depend>as2_behavior</exec_depend>
   <exec_depend>as2_behaviors_motion</exec_depend>
-  <exec_depend>as2_behaviors_platform</exec_depend>
+<!--  <exec_depend>as2_behaviors_platform</exec_depend>-->
   <!-- TODO: -->
   <!-- <exec_depend>as2_platform_ign_gazebo</exec_depend> -->
   <!--<exec_depend>as2_platform_pixhawk</exec_depend> -->
